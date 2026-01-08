@@ -1,0 +1,162 @@
+<div class="container">
+  <header class="my-4">
+    <h1 class="text-center">Bus Booking System</h1>
+  </header>
+
+  <!-- {{ busLocations$ | async | json }} -->
+  <!-- Search Form -->
+  <section>
+    <div class="container-fluid mt-5 d-flex justify-content-center">
+      <form
+        #searchForm="ngForm"
+        class="search-form d-flex align-items-center shadow-lg p-3 bg-light rounded"
+      >
+        <div class="row w-100 text-dark">
+          <!-- From Location -->
+          <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
+            <div class="input-group">
+              <!-- <span class="input-group-text"><i class="bi bi-bus-front"></i></span> -->
+              <select
+                required
+                class="form-select"
+                [(ngModel)]="searchLocation.fromLocationId"
+                name="fromLocationId"
+              >
+                <option value="" selected>From Location</option>
+                @for(locations of busLocations$ | async ; let i = $index; track i ) {
+                <option [value]="locations.locationId">{{ locations.locationName }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <!-- Arrow -->
+          <div
+            class="col-md-1 text-center d-flex align-items-center justify-content-center mb-2 mb-md-0"
+          >
+            ->
+          </div>
+
+          <!-- To Location -->
+          <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
+            <div class="input-group">
+              <!-- <span class="input-group-text"><i class="bi bi-bus-front"></i></span> -->
+              <select
+                required
+                class="form-select"
+                [(ngModel)]="searchLocation.toLocationId"
+                name="toLocationId"
+              >
+                <option value="" selected>To Location</option>
+                @for(locations of busLocations$ | async ; let i = $index; track i ) {
+                <option [value]="locations.locationId">{{ locations.locationName }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <!-- Date -->
+          <div class="col-md-3 d-flex align-items-center mb-2 mb-md-0">
+            <div class="input-group">
+              <!-- <span class="input-group-text"><i class="bi bi-calendar"></i></span> -->
+              <input
+                required
+                type="date"
+                [(ngModel)]="searchLocation.scheduleDate"
+                name="scheduleDate"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- Search Button -->
+          <div class="col-md-2 text-center">
+            <button
+              type="button"
+              [disabled]="searchForm.invalid"
+              (click)="onSearch()"
+              class="btn btn-primary w-100"
+            >
+              SEARCH BUSES
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Buses List -->
+  {{ bustickets$ | async | json }}
+  <section id="buses-list" class="my-4">
+    <h2>Available Buses</h2>
+    <!-- Example Placeholder Bus Card -->
+    @for(tickets of bustickets$ | async ; track $index ) {
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-3 bg-light border-0 shadow-sm">
+          <div class="row g-0 border-bottom">
+            <!-- Bus Info -->
+            <div class="col-md-3 d-flex flex-column justify-content-center align-items-center p-3">
+              <h5 class="card-title mb-1">{{ tickets.busName }}</h5>
+              <p class="card-text text-muted">{{ tickets.vendorName }}</p>
+            </div>
+
+            <!-- Details -->
+            <div class="col-md-9">
+              <div class="card-body row">
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="fw-bold">{{ tickets.departureTime | date : 'hh:mm a' }}</p>
+                  <p class="text-muted">Departure</p>
+                </div>
+
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="fw-bold">
+                    {{ calculateDuration(tickets.departureTime, tickets.arrivalTime) }}
+                  </p>
+                  <p class="text-muted">Duration</p>
+                </div>
+
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="fw-bold">{{ tickets.arrivalTime | date : 'hh:mm a' }}</p>
+                  <p class="text-muted">Arrival</p>
+                  <p class="text-danger">{{ tickets.arrivalTime | date : 'dd-MM-yyyy' }}</p>
+                </div>
+
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="fw-bold">4.5 ⭐</p>
+                  <p class="text-muted">567 Ratings</p>
+                </div>
+
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="fw-bold">{{ tickets.price | currency : 'INR' }}</p>
+                  <p class="text-muted">
+                    {{ tickets.availableSeats }} Seats Available Out of {{ tickets.totalSeats }}
+                  </p>
+                </div>
+                <div
+                  class="col-md-2 mb-2 d-flex flex-column justify-content-center align-items-center"
+                >
+                  <button class="btn btn-danger" [routerLink]="['/booking', tickets.scheduleId]">
+                    Book Seat
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- Duplicate the card above if you need more static entries -->
+  </section>
+</div>

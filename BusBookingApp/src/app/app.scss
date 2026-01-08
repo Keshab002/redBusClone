@@ -1,0 +1,89 @@
+// ------------------------------
+// Variables
+// ------------------------------
+$primary-color: #f05a58;
+$light-bg: #f8f9fa;
+$seat-border: #ddd;
+$seat-size: 30px;
+
+// ------------------------------
+// Search Form Styles
+// ------------------------------
+.search-form {
+  background-color: $primary-color;
+  padding: 20px;
+  border-radius: 40px;
+
+  .form-control,
+  .form-select {
+    border-radius: 20px !important;
+  }
+
+  button {
+    border-radius: 20px;
+  }
+
+  .input-group-text {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+// ------------------------------
+// Bus Layout Styles
+// ------------------------------
+.bus-layout {
+  background-color: $light-bg;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  margin: auto;
+
+  .driver {
+    width: $seat-size;
+    height: $seat-size;
+    margin-right: 10px;
+  }
+
+  .seat {
+    width: $seat-size;
+    height: $seat-size;
+    margin: 5px;
+    border: 2px solid $seat-border;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &.available {
+      background-color: #fff;
+    }
+
+    &.selected {
+      background-color: $primary-color;
+    }
+
+    &.reserved {
+      background-color: black !important;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* Backdrop */
+.modal-backdrop-custom {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 998;
+}
+
+/* Modal */
+.modal-dialog-custom {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+  width: 400px;
+}

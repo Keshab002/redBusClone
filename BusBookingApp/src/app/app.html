@@ -1,0 +1,196 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light bg-light"
+  style="background-color: rgb(171, 177, 183) !important"
+>
+  <div class="container">
+    <a class="navbar-brand" href="/search">
+      <img
+        src="https://s3.rdbuz.com/Images/rdc/rdc-redbus-logo.webp"
+        style="width: 5rem"
+        alt="redbus"
+      />
+    </a>
+
+    <div class="d-flex flex-column justify-content-center">
+      <span>Trusted by</span>
+      <span class="fw-bold">5 Crore+ Travellers</span>
+    </div>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-bus"></i> Buses</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-train"></i> Trains</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-airplane"></i> Flights</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-building"></i> Hotels</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-gift"></i> Offers</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link"><i class="icon bi bi-ticket-perforated"></i> Track Ticket</a>
+        </li>
+
+        <!-- Static state: user not logged in -->
+        <!-- {{loggedinUser | json}} -->
+        @if(!loggedinUser?.userName) {
+        <li class="nav-item">
+          <a class="nav-link text-danger fw-bold" style="cursor: pointer" (click)="openModal()">
+            <i class="icon bi bi-person"></i> Login/SignUp
+          </a>
+        </li>
+        } @else {
+        <li class="nav-item">
+          <div class="d-flex align-items-center justify-content-center">
+            <a class="nav-link text-success">
+              <i class="icon bi bi-person"></i> {{ loggedinUser?.userName }}
+            </a>
+            <a class="text-danger fw-bold" style="cursor: pointer" (click)="onLogout()">
+              <i class="icon bi bi-person"></i> Logout
+            </a>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<router-outlet />
+
+@if(isOpen) {
+<div class="modal d-flex align-items-center justify-content-center" id="myModal">
+  <div class="modal-dialog w-50">
+    <div class="modal-content">
+      <div class="modal-header">
+        @if(isLogin) {
+        <h4 class="modal-title">Login</h4>
+        } @else {
+        <h4 class="modal-title">Register</h4>
+        }
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Login Form (Static) -->
+        @if(isLogin) {
+        <form #loginForm="ngForm">
+          <div class="form-outline mb-4">
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="loginObj.emailId"
+              name="emailId"
+            />
+            <label class="form-label">Email address</label>
+          </div>
+
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)]="loginObj.password"
+              name="password"
+            />
+            <label class="form-label">Password</label>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary btn-block mb-4 w-100"
+            (click)="onLogin(loginForm)"
+          >
+            Sign in
+          </button>
+
+          <div class="text-center">
+            <p>
+              Not a member?
+              <a (click)="toggleLogin()" class="text-primary link-underline">Register</a>
+            </p>
+          </div>
+        </form>
+        } @else {
+        <form #registerForm="ngForm">
+          <div class="form-outline mb-4">
+            <input
+              type="email"
+              class="form-control"
+              [(ngModel)]="registerObj.emailId"
+              name="emailId"
+            />
+            <label class="form-label">Email address</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="registerObj.fullName"
+              name="fullName"
+            />
+            <label class="form-label">Full Name</label>
+          </div>
+          <div class="form-outline mb-4">
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="registerObj.userName"
+              name="userName"
+            />
+            <label class="form-label">Username</label>
+          </div>
+
+          <div class="form-outline mb-4">
+            <input
+              type="password"
+              class="form-control"
+              [(ngModel)]="registerObj.password"
+              name="password"
+            />
+            <label class="form-label">Password</label>
+          </div>
+
+          <button
+            type="button"
+            class="btn btn-primary btn-block mb-4 w-100"
+            (click)="onRegister(registerForm)"
+          >
+            Register
+          </button>
+
+          <div class="text-center">
+            <p>
+              Already a member?
+              <a class="text-primary link-underline" (click)="toggleLogin()">Login</a>
+            </p>
+          </div>
+        </form>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+}

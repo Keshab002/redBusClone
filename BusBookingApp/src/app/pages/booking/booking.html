@@ -1,0 +1,98 @@
+<section id="booking-form" class="my-4">
+  <div class="container mt-5">
+    <div class="row">
+      <!-- LEFT: Seat layout -->
+      <div class="col-4">
+        <!-- Seat Legend -->
+        <div class="row mb-3">
+          <div class="col-12 text-center">
+            <h5>Bus Seats</h5>
+          </div>
+        </div>
+
+        <div class="row text-center mb-3">
+          <div class="col-4">
+            <div class="seat p-3 w-100"></div>
+            <small class="bg-danger-subtle p-1">Booked</small>
+          </div>
+
+          <div class="col-4">
+            <div class="seat available p-3 w-100"></div>
+            <small class="bg-success-subtle p-1">Available</small>
+          </div>
+
+          <div class="col-4">
+            <div class="seat selected p-3 w-100"></div>
+            <small class="bg-primary-subtle p-1">Selection</small>
+          </div>
+        </div>
+
+        <hr />
+        <!-- Static Seat Grid -->
+        <div class="row g-2">
+          <!-- You can duplicate these blocks to show more seats -->
+          @for(seats of seatArray ; track $index ) { @if(checkIfBooked(seats)) {
+          <div class="col-3 d-flex justify-content-center">
+            <div class="bg-danger-subtle p-1">{{ seats }}</div>
+          </div>
+          }@else if(checkIfSelected(seats)) {
+          <div class="col-3 d-flex justify-content-center">
+            <div class="bg-primary-subtle p-1">{{ seats }}</div>
+          </div>
+          } @else {
+          <div class="col-3 d-flex justify-content-center" (click)="selectSeat(seats)">
+            <div class="bg-success-subtle p-1">{{ seats }}</div>
+          </div>
+          }}
+
+          <!-- Add more seats as needed -->
+        </div>
+      </div>
+
+      <!-- RIGHT: Passenger Details -->
+      <div class="col-8">
+        <h4>Passenger Details</h4>
+
+        <!-- Static Message (when no seats selected) -->
+        <div class="row">
+          <div class="col-12 pt-5 text-center">
+            <p>Please select seats to enter passenger details</p>
+          </div>
+        </div>
+
+        <!-- Static Example Passenger List (remove above message if using this) -->
+        <div class="row mt-4">
+          <div class="col-3">
+            <label>Passenger</label>
+            <input type="text" class="form-control" value="John Doe" />
+          </div>
+
+          <div class="col-2">
+            <label>Age</label>
+            <input type="text" class="form-control" value="30" />
+          </div>
+
+          <div class="col-2">
+            <label>Gender</label>
+            <select class="form-control">
+              <option selected>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+
+          <div class="col-2">
+            <label>Seat No</label>
+            <input type="text" class="form-control" value="3" disabled />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Book Now Button -->
+    <div class="row mt-4">
+      <div class="col-12 text-center">
+        <button class="btn btn-danger">Book Now</button>
+      </div>
+    </div>
+  </div>
+</section>
