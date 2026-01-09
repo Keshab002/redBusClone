@@ -25,7 +25,6 @@ const loginUserModel = async ({ emailId, password }) => {
   const user = users.find(
     (u) => u.emailId === emailId && u.password === password
   );
-  console.log("Found user:", user);
   return user || null;
 };
 

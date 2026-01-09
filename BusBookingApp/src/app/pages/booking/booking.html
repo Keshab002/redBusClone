@@ -32,15 +32,23 @@
         <div class="row g-2">
           <!-- You can duplicate these blocks to show more seats -->
           @for(seats of seatArray ; track $index ) { @if(checkIfBooked(seats)) {
-          <div class="col-3 d-flex justify-content-center">
+          <div class="col-3 d-flex justify-content-center" style="pointer-events: none">
             <div class="bg-danger-subtle p-1">{{ seats }}</div>
           </div>
           }@else if(checkIfSelected(seats)) {
-          <div class="col-3 d-flex justify-content-center">
+          <div
+            class="col-3 d-flex justify-content-center"
+            style="cursor: pointer"
+            (click)="deselectSeat(seats)"
+          >
             <div class="bg-primary-subtle p-1">{{ seats }}</div>
           </div>
           } @else {
-          <div class="col-3 d-flex justify-content-center" (click)="selectSeat(seats)">
+          <div
+            class="col-3 d-flex justify-content-center"
+            style="cursor: pointer"
+            (click)="selectSeat(seats)"
+          >
             <div class="bg-success-subtle p-1">{{ seats }}</div>
           </div>
           }}
@@ -54,44 +62,53 @@
         <h4>Passenger Details</h4>
 
         <!-- Static Message (when no seats selected) -->
-        <div class="row">
-          <div class="col-12 pt-5 text-center">
-            <p>Please select seats to enter passenger details</p>
-          </div>
-        </div>
+        <mat-expansion-panel class="mt-3">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <div class="row">
+                <div class="text-center">
+                  <p class="mt-3">Please select seats to enter passenger details</p>
+                </div>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-        <!-- Static Example Passenger List (remove above message if using this) -->
-        <div class="row mt-4">
-          <div class="col-3">
-            <label>Passenger</label>
-            <input type="text" class="form-control" value="John Doe" />
-          </div>
+          <!-- Static Example Passenger List (remove above message if using this) -->
+          @for (item of userSelectedSeats; track $index) {
+          <div class="row mt-4">
+            <div class="col-3">
+              <label>Passenger</label>
+              <input type="text" [(ngModel)]="item.passengerName" name="passengerName{{ $index }}" class="form-control" value="John Doe"  />
+            </div>
 
-          <div class="col-2">
-            <label>Age</label>
-            <input type="text" class="form-control" value="30" />
-          </div>
+            <div class="col-2">
+              <label>Age</label>
+              <input type="number" [(ngModel)]="item.age" name="age{{ $index }}" class="form-control" value="30" />
+            </div>
 
-          <div class="col-2">
-            <label>Gender</label>
-            <select class="form-control">
-              <option selected>Male</option>
-              <option>Female</option>
-            </select>
-          </div>
+            <div class="col-2">
+              <label>Gender</label>
+              <select [(ngModel)]="item.gender" class="form-control" name="gender{{ $index }}">
+                <option value="" selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
 
-          <div class="col-2">
-            <label>Seat No</label>
-            <input type="text" class="form-control" value="3" disabled />
+            <div class="col-2">
+              <label>Seat No</label>
+              <input type="text" class="form-control" [(ngModel)]="item.seatNo" disabled />
+            </div>
           </div>
-        </div>
+          }
+        </mat-expansion-panel>
       </div>
     </div>
 
     <!-- Book Now Button -->
     <div class="row mt-4">
       <div class="col-12 text-center">
-        <button class="btn btn-danger">Book Now</button>
+        <button class="btn btn-danger" (click)="bookSeat()">Book Now</button>
       </div>
     </div>
   </div>

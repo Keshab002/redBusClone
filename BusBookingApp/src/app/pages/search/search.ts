@@ -9,7 +9,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-search',
-  imports: [AsyncPipe, FormsModule, JsonPipe, DatePipe, CurrencyPipe,RouterLink],
+  imports: [AsyncPipe, FormsModule, DatePipe, CurrencyPipe,RouterLink],
   templateUrl: './search.html',
   styleUrl: './search.scss',
 })

@@ -1,0 +1,18 @@
+[
+  {
+    "bookingId": 0,
+    "custId": 0.4310417784448174,
+    "bookingDate": "2026-01-09T05:36:28.889Z",
+    "scheduleId": "2057",
+    "BusBookingPassengers": [
+      {
+        "passengerId": 0,
+        "bookingId": 0,
+        "passengerName": "habibi ",
+        "age": 23,
+        "gender": "Male",
+        "seatNo": 12
+      }
+    ]
+  }
+]

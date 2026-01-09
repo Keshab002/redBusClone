@@ -1,8 +1,11 @@
-import { ChangeDetectorRef, Component, signal } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { Master } from './service/master';
-import { JsonPipe } from '@angular/common';
 import { UserRegisterInterface } from './models/userData.interface';
 
 @Component({
@@ -46,6 +49,13 @@ export class App {
     }
   }
 
+  // @ViewChild('myModal') myModal: ElementRef | undefined;
+
+  // ngAfterViewChecked() {
+  //   if (this.myModal) console.log(this.myModal.nativeElement.style.backgroundColor="black");
+  //   this.cdr.markForCheck();
+  // }
+
   openModal() {
     this.isOpen = true;
   }
@@ -82,8 +92,6 @@ export class App {
         alert(res.message || 'Login Successful!');
 
         localStorage.setItem('RedBusUser', JSON.stringify(res.data));
-
-        console.log(res.data);
         this.loggedinUser = res.data;
         this.closeModal();
         this.cdr.markForCheck();

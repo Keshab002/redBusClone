@@ -60,7 +60,6 @@
             <div class="input-group">
               <!-- <span class="input-group-text"><i class="bi bi-calendar"></i></span> -->
               <input
-                required
                 type="date"
                 [(ngModel)]="searchLocation.scheduleDate"
                 name="scheduleDate"
@@ -85,7 +84,6 @@
   </section>
 
   <!-- Buses List -->
-  {{ bustickets$ | async | json }}
   <section id="buses-list" class="my-4">
     <h2>Available Buses</h2>
     <!-- Example Placeholder Bus Card -->

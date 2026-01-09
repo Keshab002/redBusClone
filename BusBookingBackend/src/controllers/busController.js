@@ -3,7 +3,8 @@ const {
   getBusLocationSrv,
   getSearchBusSrv,
   getSpecificBusSrv,
-  getBookedSeatsSrv
+  getBookedSeatsSrv,
+  postBookedSeatsSrv,
 } = require("../services/busService");
 
 getBusLocationsController = async (req, res) => {
@@ -13,6 +14,7 @@ getBusLocationsController = async (req, res) => {
 
 getSearchBusController = async (req, res) => {
   const { fromLocationId, toLocationId, scheduleDate } = req.query;
+
   const availableBuses = await getSearchBusSrv(
     fromLocationId,
     toLocationId,
@@ -28,9 +30,15 @@ getSpecificBusController = async (req, res) => {
 };
 
 getBookedSeatsController = async (req, res) => {
-    const { scheduleId } = req.query;
+  const { scheduleId } = req.query;
   // Placeholder logic for booked seats
   const bookedSeats = await getBookedSeatsSrv(scheduleId);
+  res.status(200).json({ message: "success", data: bookedSeats });
+};
+
+postBookedSeatsController = async (req, res) => {
+  // Placeholder logic for booked seats
+  const bookedSeats = await postBookedSeatsSrv({ ...req.body });
   res.status(200).json({ message: "success", data: bookedSeats });
 };
 
@@ -38,5 +46,6 @@ module.exports = {
   getBusLocationsController,
   getSearchBusController,
   getSpecificBusController,
-  getBookedSeatsController
+  getBookedSeatsController,
+  postBookedSeatsController
 };

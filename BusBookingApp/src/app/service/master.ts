@@ -49,4 +49,12 @@ export class Master {
       loginObj
     );
   }
+
+  postBooking(bookingObj: any) {
+    return this.http.post<{ message: string; data: Record<string, any> }>(
+      `${this.appConfig.apiUrl}/BookSeats`,
+      bookingObj
+    );
+  }
+
 }

@@ -4,14 +4,15 @@ const {
   getSearchBusController,
   getSpecificBusController,
   getBookedSeatsController,
+  postBookedSeatsController,
 } = require("../controllers/busController");
 
 const router = express.Router();
 
-
 router.get("/GetBusLocations", getBusLocationsController);
 router.get("/SearchBuses", getSearchBusController);
-router.get("/GetSpecificBus", getSpecificBusController); // Placeholder for specific bus controller
-router.get("/GetBookedSeats", getBookedSeatsController); // Placeholder for booked seats controller
+router.get("/GetSpecificBus", getSpecificBusController);
+router.get("/GetBookedSeats", getBookedSeatsController);
+router.post("/BookSeats", postBookedSeatsController);
 
 module.exports = router;
