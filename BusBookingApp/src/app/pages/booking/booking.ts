@@ -24,19 +24,21 @@ export class Booking implements OnInit {
     private navigate: Router
   ) {
     this.scheduleId = this.router.snapshot.paramMap.get('scheduleId') as unknown as number;
-    this.customerId = JSON.parse(localStorage.getItem('RedBusUser')!).userId;
+    // this.customerId = JSON.parse(localStorage.getItem('RedBusUser')!).userId;
   }
 
   ngOnInit(): void {
+    const rawUser = localStorage.getItem('RedBusUser');
+    const user = rawUser ? JSON.parse(rawUser) : null;
+
+    this.customerId = user?.userId ?? 0;
     this.getBusDetails(this.scheduleId);
     this.getBookedSeats(this.scheduleId);
   }
 
   getBusDetails(scheduleId: number) {
     console.log(scheduleId, 'number');
-    console.log('Here');
     this.masterService.getBusbyScehduleId(scheduleId).subscribe((res) => {
-      console.log(res);
       for (let i = 1; i <= res.data.totalSeats; i++) {
         this.seatArray.push(i);
       }

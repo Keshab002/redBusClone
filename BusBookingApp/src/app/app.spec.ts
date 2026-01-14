@@ -15,6 +15,7 @@ const mockConfig = {
 
 describe('App', () => {
   beforeEach(async () => {
+    vi.spyOn(window, 'alert').mockImplementation(() => {});
     await TestBed.configureTestingModule({
       imports: [App],
       providers: [
@@ -57,6 +58,7 @@ describe('App', () => {
     const app = fixture.componentInstance;
     app.onRegister({ reset: vi.fn() });
     expect(MockMasterService.registerUser).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
   });
 
   it('should call loginUser from Master service on loginUser method call', () => {
@@ -64,6 +66,7 @@ describe('App', () => {
     const app = fixture.componentInstance;
     app.onLogin({ reset: vi.fn() });
     expect(MockMasterService.loginUser).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
   });
 
   it('should logout user', () => {
@@ -73,6 +76,7 @@ describe('App', () => {
     app.onLogout();
     expect(app.loggedinUser).toBeNull();
     expect(localStorage.getItem('RedBusUser')).toBeNull();
+    expect(window.alert).toHaveBeenCalled();
   });
 
   it('should initialize loggedinUser from localStorage if present', () => {
